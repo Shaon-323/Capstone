@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+<center class="mt-5">
+
+        <h2 > Investor List </h2>
+        
+</center>
+
+
+
+
+
+
+<div class="container mt-2">
+
+{% if pr %}
+
+
+{% for i in pr %}
+
+
+{% if i.userprofileinfo.user_type == 'investor' %}
+
+
+
+
+ <h1 class="animated animated-text">
+                            <span class="mr-2"> <i class='uil uil-user'></i> I'm</span><a  href="{% url 'profile' i.username %}">{{ i.username}}</a>
+                                <div class="animated-info">
+                                    <span class="animated-item">An {{ i.userprofileinfo.user_type }} </span>
+                                    
+                                </div>
+</h1>
+                            
+{% else %}
+
+
+{% endif %}
+
+{% endfor %}
+
+{% else %}
+
+</h2> No list <h2>
+
+{% endif %}
+
+
+
+
+
+</div>
+
+
+{% endblock content %}

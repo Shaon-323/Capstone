@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+
+h2,h5{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(229,231,225,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+{% if ideas.idea.name == 'Buy' %}
+
+
+             <center><h2 class="mt-5 mb-5">
+{{ ideas.title }}
+
+              </h2> </center>
+
+
+     <div class='container mt-3'>
+
+<ul>
+ <li>
+
+
+     <h5> Idea Owner: {{ ideas.created_by }} </h5>
+     
+     <h5> Price: {{ ideas.price }} </h5>
+{% if ideas.File %}
+<h5> Zip File Included !!! </h5>
+{% endif %}
+     <h5>
+  
+  {% if ideas.video %}
+
+      <a href="{{ ideas.video.url }}" class="btn custom-btn custom-btn-bg custom-btn-link"> Demo Video </a>
+  
+  {% endif %}
+     
+     <h5> Details: {{ ideas.details }} </h5>
+
+     <section class="banner-section mb-5">
+           {% if ideas.post_image1 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image1.url }}">
+           {% endif %}
+           </section>
+
+        <section class="banner-section mb-5">
+           {% if ideas.post_image2 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image2.url }}">
+           {% endif %}
+           </section>
+    
+        <section class="banner-section mb-5">
+           {% if ideas.post_image3 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image3.url }}">
+           {% endif %}
+           </section>
+     
+
+     <h5>
+
+        <h5> Want to buy This Idea <br> Send money with your phonenumber,name and idea name <br> To 01705180683 <br>Get Code And Submit Here For Buy The Whole Idea Files </h5>
+
+                    <form method="get" action="{% url 'codecheck' %}">
+
+                        <input type="hidden" name="ideaname" value="{{ ideas.title }}">
+
+                        <input type="text" name="code" placeholder="CODE...">
+
+                        <button type="submit" class="btn-success"> Submit </button>
+
+                    </form>
+
+   
+     
+
+    </h5>
+
+
+    </div>
+ </li>
+</ul> 
+  
+
+
+    
+
+{% endif %}
+
+
+
+
+
+
+
+{% if ideas.idea.name == 'Negotiate' %}
+
+             <center><h2 class="mt-5 mb-5">
+{{ ideas.title }}
+
+              </h2> </center>
+
+
+     <div class='container mt-3'>
+
+<ul>
+ <li>
+
+
+     <h5> Idea Owner: {{ ideas.created_by }} </h5>
+     
+     <h5> Price: {{ ideas.price }} </h5>
+{% if ideas.File %}
+<h5> Zip File Included !!! </h5>
+{% endif %}
+     <h5>
+  
+  {% if ideas.video %}
+
+      <a href="{{ ideas.video.url }}" class="btn custom-btn custom-btn-bg custom-btn-link"> Demo Video </a>
+  
+  {% endif %}
+     
+     <h5> Details: {{ ideas.details }} </h5>
+
+     <section class="banner-section mb-5">
+           {% if ideas.post_image1 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image1.url }}">
+           {% endif %}
+           </section>
+
+        <section class="banner-section mb-5">
+           {% if ideas.post_image2 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image2.url }}">
+           {% endif %}
+           </section>
+    
+        <section class="banner-section mb-5">
+           {% if ideas.post_image3 %}
+          <img width="50%" height="300px" src=" {{ ideas.post_image3.url }}">
+           {% endif %}
+           </section>
+
+
+</h5>
+
+
+           <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+  Chat Room 
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Chat Room</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+      <form method="post">
+          <div class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" name="form" value="Add Message" class="btn btn-primary btn-sm">
+          </div>
+        </form>
+
+
+        Message :
+
+         {% for sms in ideas.messages.all %}
+
+        <h5> <small>{{sms.author}}</small> - {{ sms.body }} <h5> 
+
+         {% endfor %}
+
+
+
+
+
+
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+     
+
+    
+
+
+
+     
+     
+
+        
+
+
+    </div>
+ </li>
+</ul> 
+  
+
+
+    
+
+{% endif %}
+
+
+<center class="mb-5">
+    
+ <a class=" btn custom-btn custom-btn-bg custom-btn-link" href= "{% url 'idea_update' category=ideas.idea.slug slug=ideas.slug %}">Update</a>
+ <a class=" btn custom-btn custom-btn-bg custom-btn-link" href= "{% url 'idea_delete' category=ideas.idea.slug slug=ideas.slug %}"> Delete</a>
+
+</center>
+
+
+
+{% endblock content %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+
+.title {
+ 
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+.card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+     
+}
+.card {
+   background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(249,255,0,1) 0%, rgba(34,238,136,1) 0%, rgba(0,212,255,1) 100%); 
+ 
+    font-size: 1em;
+    overflow: hidden;
+    padding: 5;
+    border: none;
+    border-radius: .28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    margin-top:20px;
+}
+
+
+
+.btn {
+  margin-top: auto;
+}
+
+
+</style>
+
+
+  <center class="mt-5">
+
+        <h1 > NOTICES </h1> <a class="nav-link" href= "{% url 'createpost' %}"><button class="btn custom-btn custom-btn-bg custom-btn-link" type="button"> +Add Notice</button></a>
+
+        
+</center>
+
+
+{% for blog in posts %}
+
+
+<div class="container py-3 mb-5">
+
+  <div class="title h1 text-center"></div>
+
+  <!-- Card Start -->
+
+  <div class="card">
+
+    <div class="row ">
+
+      <div class="col-md-5 px-3">
+        <div class="card-block px-6">
+          <h4 class="card-title"> Title: {{ blog.title }} </h4>
+          <h5> </h5>
+
+          
+          
+          <h5> </h5>
+          <p class="card-text">
+           Event Host: <a href="{% url 'profile' blog.posted_by %}">{{ blog.posted_by }}</a>  <br>
+           Date: {{ blog.creation }} <br>
+           Company Name: {{ blog.company }} <br>
+           People Needed : {{ blog.numberofpeople }} <br>
+           Contact Info: {{ blog.contact_details }}
+          </p>
+          <br>
+           <a class="nav-link" href= "{% url 'post_detail' blog.id %}"><button class="btn btn-outline-primary" type="button"> Details </button></a>
+ 
+          
+       
+        </div>
+      </div>
+
+
+
+      
+    <div class="col-md-6">
+       {% if blog.event_poster %}
+          <img width="100%" height="auto" src=" {{ blog.event_poster.url }}">
+       {% endif %}
+    </div>
+
+            
+
+
+
+
+    </div>
+  </div>
+  <!-- End of card -->
+    
+
+
+
+</div>
+
+ 
+ <br>
+<br>
+    
+    
+
+
+
+{% endfor %}
+
+{% endblock content %}

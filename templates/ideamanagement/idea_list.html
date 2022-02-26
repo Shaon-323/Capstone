@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+
+.title {
+ 
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+.card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+     
+}
+.card {
+    background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(249,255,0,1) 0%, rgba(34,238,136,1) 0%, rgba(0,212,255,1) 100%); 
+ 
+    font-size: 1em;
+    overflow: hidden;
+    padding: 5;
+    border: none;
+    border-radius: .28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    margin-top:20px;
+}
+
+
+
+.btn {
+  margin-top: auto;
+}
+
+
+</style>
+
+
+
+
+{% if categories.name == 'Buy' %}
+
+<center class="mt-5">
+
+        <h1 > Buy Whole Ideas With Files </h1>   <a href="{% url 'idea_create' slug=categories.slug %}" class="btn custom-btn custom-btn-bg custom-btn-link"> Post Whole Idea For Sale <a/> 
+        
+</center>
+
+
+
+{% for idea in categories.ideas.all %}
+
+
+
+
+<div class="container py-3 mb-5">
+
+  <div class="title h1 text-center"></div>
+
+  <!-- Card Start -->
+
+  <div class="card">
+
+    <div class="row ">
+
+      <div class="col-md-7 px-3">
+        <div class="card-block px-6">
+          <h4 class="card-title"> Title: {{ idea.title }} </h4>
+          <h5> Idea Owner: <a href="{% url 'profile' idea.created_by %}">{{ idea.created_by }}</a> </h5>
+          <h5> Price: {{ idea.price }} Taka </h5>
+          <h5> Date: {{ idea.created_at }} </h5>
+          <h5 class="card-text">Summary :
+           {{ idea.summary }}
+          </h5>
+          <br>
+          <a href="{% url 'idea_detail' slug=idea.slug category=categories.slug %}" class="btn custom-btn custom-btn-bg custom-btn-link">  See Details {{ idea.created_by }}</a>
+
+                  <!-- Button trigger modal -->
+
+
+
+                
+
+                    
+                    
+                  
+                   
+
+
+
+
+
+          
+          {% if categories.name == 'Buy' and idea.video %}
+
+
+           <a href="{{ idea.video.url }}" class="btn custom-btn custom-btn-bg custom-btn-link"> Demo Video </a>
+                              
+
+
+
+         {% endif %}
+       
+       
+       
+        </div>
+      </div>
+
+
+
+          
+    <div class="col-md-4">
+     {% if idea.post_image2 %}
+    <img width="100%" height="250" src= "{{ idea.post_image2.url }}">
+     {% endif %}
+
+    </div>
+
+       
+
+
+
+
+    </div>
+  </div>
+  <!-- End of card -->
+    
+
+
+
+</div>
+
+ 
+ <br>
+<br>
+    
+    
+
+
+
+{% endfor %}
+
+
+{% endif %}
+
+
+
+
+  <!-- Negotiate type-->
+
+
+{% if categories.name == 'Negotiate' %}
+
+<center class="mt-5">
+
+        <h1 > Negotiate With Entrepreneur </h1>  <a href="{% url 'idea_create' slug=categories.slug %}" class="btn custom-btn custom-btn-bg custom-btn-link"> Post Negotiable Idea <a/> 
+
+ 
+        
+</center>
+
+
+
+
+  
+{% for idea in categories.ideas.all %}
+
+
+
+
+<div class="container py-3 mb-5">
+
+  <div class="title h1 text-center"></div>
+
+  <!-- Card Start -->
+
+  <div class="card">
+
+    <div class="row ">
+
+      <div class="col-md-7 px-3">
+        <div class="card-block px-6">
+          <h4 class="card-title"> Title: {{ idea.title }} </h4>
+          <h5> Idea Owner: <a href="{% url 'profile' idea.created_by %}">{{ idea.created_by }}</a> </h5>
+          <h5> Price: {{ idea.price }} Taka </h5>
+          <h5> Date: {{ idea.created_at }} </h5>
+          <p class="card-text">
+     
+           {{ idea.summary }}
+          </p>
+          <br>
+          <a href="{% url 'idea_detail' slug=idea.slug category=categories.slug %}" class="btn custom-btn custom-btn-bg custom-btn-link">  Invest in ideas Negotiate with {{ idea.created_by }}</a>
+
+                  <!-- Button trigger modal -->
+
+
+
+          
+          {% if  idea.video %}
+
+
+           <a href="{{ idea.video.url }}" class="btn custom-btn custom-btn-bg custom-btn-link"> Demo Video </a>
+                              
+ 
+
+
+         {% endif %}
+       
+       
+       
+        </div>
+      </div>
+       
+       
+   
+
+          
+    <div class="col-md-4">
+     {% if idea.post_image2 %}
+    <img width="100%" height="250" src= "{{ idea.post_image2.url }}">
+     {% endif %}
+
+    </div>
+
+       
+
+
+
+
+    </div>
+  </div>
+  <!-- End of card -->
+    
+
+
+
+</div>
+
+ 
+ <br>
+<br>
+    
+    
+
+
+
+{% endfor %}
+
+
+{% endif %}
+
+
+
+{% endblock content %}
